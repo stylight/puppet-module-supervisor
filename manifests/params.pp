@@ -1,6 +1,12 @@
 class supervisor::params {
   case $::operatingsystem {
-    'ubuntu','debian': {
+    'debian': {
+      $conf_file = '/etc/supervisor/supervisord.conf'
+      $conf_dir = '/etc/supervisor/conf.d'
+      $system_service = 'supervisor'
+      $package = 'supervisor'
+    }
+    'ubuntu': {
       $conf_file = '/etc/supervisor/supervisord.conf'
       $conf_dir = '/etc/supervisor'
       $system_service = 'supervisor'
