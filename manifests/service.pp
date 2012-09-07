@@ -58,7 +58,7 @@ define supervisor::service (
     $process_name = $name
   }
 
-  file { "${supervisor::params::conf_dir}/${name}.ini":
+  file { "${supervisor::params::conf_dir}/${name}.${supervisor::params::conf_ext}":
     ensure  => $config_ensure,
     content => template('supervisor/service.ini.erb'),
     require => File[
