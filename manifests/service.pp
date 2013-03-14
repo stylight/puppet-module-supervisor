@@ -1,5 +1,7 @@
 define supervisor::service (
   $command,
+  $section="program",
+  $events=[],
   $ensure=present,
   $enable=true,
   $numprocs=1,
@@ -10,6 +12,8 @@ define supervisor::service (
   $retries=3,
   $exitcodes='0,2',
   $stopsignal='TERM',
+  $stopasgroup=false,
+  $killasgroup=false,
   $stopwait=10,
   $user='root',
   $group='root',
