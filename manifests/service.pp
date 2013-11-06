@@ -95,6 +95,8 @@ define supervisor::service (
     start    => "/usr/bin/supervisorctl start ${process_name}",
     status   => "/usr/bin/supervisorctl status | awk '/^${name}[: ]/{print \$2}' | grep '^RUNNING$'",
     stop     => "/usr/bin/supervisorctl stop ${process_name}",
-    require  => Service[$supervisor::params::system_service],
+    require  => [Service[$supervisor::params::system_service],
+                 File["/var/log/supervisor/${name}"],
+                 File["${supervisor::params::conf_dir}/${name}.${supervisor::params::conf_ext}"]];
   }
 }
