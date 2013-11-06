@@ -44,12 +44,6 @@ define supervisor::service (
       $dir_recurse = false
       $dir_force = false
       $service_ensure = 'running'
-
-      if $enable == true {
-        $config_ensure = undef
-      } else {
-        $config_ensure = absent
-      }
     }
     default: {
       fail("ensure must be 'present' or 'absent', not ${ensure}")
@@ -83,6 +77,7 @@ define supervisor::service (
 
   service { "supervisor::${name}":
     ensure   => $service_ensure,
+    enable   => $enable,
     provider => base,
     restart  => "/usr/bin/supervisorctl restart ${process_name}",
     start    => "/usr/bin/supervisorctl start ${process_name}",
