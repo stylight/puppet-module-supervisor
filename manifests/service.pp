@@ -2,7 +2,7 @@ define supervisor::service (
   $command,
   $section="program",
   $events=[],
-  $ensure=present,
+  $ensure=running,
   $enable=true,
   $numprocs=1,
   $numprocs_start=0,
@@ -30,20 +30,32 @@ define supervisor::service (
 ) {
   include supervisor::params
 
+  $autostart = $enable
+
   case $ensure {
+    stopped: {
+      $dir_ensure = 'directory'
+      $dir_recurse = false
+      $dir_force = false
+      $service_ensure = 'stopped'
+    }
+    running: {
+      $dir_ensure = 'directory'
+      $dir_recurse = false
+      $dir_force = false
+      $service_ensure = 'running'
+    }
     absent: {
-      $autostart = false
       $dir_ensure = 'absent'
       $dir_recurse = true
       $dir_force = true
       $service_ensure = 'stopped'
     }
     present: {
-      $autostart = true
       $dir_ensure = 'directory'
       $dir_recurse = false
       $dir_force = false
-      $service_ensure = 'running'
+      $service_ensure = undef
     }
     default: {
       fail("ensure must be 'present' or 'absent', not ${ensure}")
