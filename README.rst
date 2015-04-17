@@ -17,3 +17,4 @@ Example usage::
       group       => 'scribe',
       require     => [ Package['scribe'], User['scribe'] ];
   }
+
