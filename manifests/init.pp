@@ -179,6 +179,9 @@ class supervisor(
   file { '/etc/logrotate.d/supervisor':
     ensure  => $file_ensure,
     source  => 'puppet:///modules/supervisor/logrotate',
+    owner => root,
+    group => root,
+    mode => 644,
     require => Package[$supervisor::params::package],
   }
 
